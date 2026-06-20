@@ -24,6 +24,23 @@ Recognizing that raw customer review data is hard to quantify, I extracted revie
 * **Natural Language Processing (NLP):** Utilized the `nltk` library’s **VADER Sentiment Intensity Analyzer** to generate text polarity compound scores.
 * **Feature Engineering:** Formulated a custom business logic algorithm combining textual sentiment scores with numerical 1–5 star ratings to classify responses into actionable buckets. The final enriched output is saved as `fact_customer_reviews_with_sentiment.csv`.
 
+#### Optional TweetClaw Social Listening Import
+Use `tweetclaw_reviews_export.py` when X/Twitter campaign feedback should be
+reviewed beside customer-review sentiment. The helper accepts TweetClaw JSON,
+JSONL, NDJSON, or CSV exports and writes the same semicolon-delimited review
+columns used by the enrichment workflow:
+
+```bash
+python tweetclaw_reviews_export.py tweetclaw-export.jsonl \
+  --output tweetclaw_customer_reviews.csv \
+  --product-id 0 \
+  --rating 3
+```
+
+The generated CSV contains `ReviewID`, `CustomerID`, `ProductID`, `ReviewDate`,
+`Rating`, and `ReviewText`. Keep the default rating at `3` when imported posts
+are social-listening evidence rather than verified product reviews.
+
 ### 3. Business Intelligence Dashboards (Power BI)
 I integrated the cleaned, enriched outputs into Power BI to create an executive analytics ecosystem across three customized interfaces:
 
